@@ -6,6 +6,7 @@ AllCops:
     - "node_modules/**/*"
 
   DisplayCopNames: true
+  TargetRubyVersion: 'gemfile'
 
 Layout/LineLength:
   Max: 120
