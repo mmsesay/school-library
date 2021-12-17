@@ -15,6 +15,8 @@ class App
     5 - Create a rental
     6 - List all rentals for a given person id
     7 - Exit'
+
+    puts "\n"
   end
 
   def create_person
@@ -40,19 +42,24 @@ class App
 
     case user_selection
     when '1'
-      print 'Enter classroom: '
-      classroom = gets.chomp
-
-      Student.new(age, name, classroom, has_parent_permission)
+      person = Student.new(age, name, has_parent_permission)
+      @people << person
       puts 'New student created successfully'
     when '2'
       print 'Enter specialization: '
       specialization = gets.chomp
 
-      Teacher.new(age, name, specialization, has_parent_permission)
+      person = Teacher.new(age, specialization, name, has_parent_permission)
+      @people << person
       puts 'New Teacher created successfully'
     else
       puts 'Invalid selection'
+    end
+  end
+
+  def list_all_people
+    @people.each do |person|
+      puts "Name: #{person.name}, Age: #{person.age}"
     end
   end
 
@@ -62,7 +69,7 @@ class App
     when '1'
       puts 'List Books'
     when '2'
-      puts 'List People'
+      list_all_people
     when '3'
       create_person
     when '4'
