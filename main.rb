@@ -93,13 +93,27 @@ class App
 
   def list_all_people
     @people.each do |person|
-      puts "[#{person.class}] Name: #{person.name}, Age: #{person.age}"
+      puts "[#{person.class}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
     end
   end
 
   def list_all_books
     @books.each do |book|
       puts "Book Title: #{book.title}, Book Author: #{book.author}"
+    end
+  end
+
+  def list_all_rentals
+    print 'Enter the ID of the person: '
+    input_id = gets.chomp.to_i
+
+    puts 'All Rentals: '
+    @rentals.each do |rental|
+      if rental.person.id == input_id
+        puts "Book: #{rental.book.title} - Author: #{rental.book.author} rented on #{rental.date} by #{person.name}"
+      else
+        puts "User ID #{input_id} not found"
+      end
     end
   end
 
@@ -117,7 +131,7 @@ class App
     when '5'
       create_rental
     when '6'
-      puts 'List all'
+      list_all_rentals
     when '7'
       exit
     end
