@@ -1,9 +1,11 @@
 require './student'
 require './teacher'
+require './book'
 
 class App
   def initialize
     @people = []
+    @books = []
   end
 
   def menu
@@ -56,6 +58,17 @@ class App
     handle_person_creation(user_input, age, name, has_parent_permission)
   end
 
+  def create_book
+    print 'Enter Book Title: '
+    book_title = gets.chomp
+
+    print 'Enter Book Author: '
+    book_author = gets.chomp
+
+    @books << Book.new(book_title, book_author)
+    puts 'New Book created successfully'
+  end
+
   def list_all_people
     @people.each do |person|
       puts "Name: #{person.name}, Age: #{person.age}"
@@ -72,7 +85,7 @@ class App
     when '3'
       create_person
     when '4'
-      puts 'Create a book'
+      create_book
     when '5'
       puts 'Create a rental'
     when '6'
