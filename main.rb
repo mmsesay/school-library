@@ -1,11 +1,13 @@
 require './student'
 require './teacher'
 require './book'
+require './rental'
 
 class App
   def initialize
     @people = []
     @books = []
+    @rentals = []
   end
 
   def menu
@@ -67,9 +69,31 @@ class App
     puts 'New Book created successfully'
   end
 
+  def create_rental
+    puts '\nSelect a book to rent from the numbers in the brackets'
+    @books.each_with_index do |book, index|
+      puts "(#{index}) - Book Title: #{book.title}, Author: #{book.author}"
+    end
+
+    selected_book = gets.chomp.to_i
+
+    puts '\nSelect a person who is renting the book from the numbers in the brackets'
+    @people.each_with_index do |person, index|
+      puts "(#{index}) - [#{person.class}] Name: #{person.name}, Age: #{person.age}"
+    end
+
+    selected_person = gets.chomp.to_i
+
+    print 'Enter rental date: '
+    rental_date = gets.chomp.to_s
+
+    @rentals << Rental.new(rental_date, @books[selected_book], @people[selected_person])
+    puts 'Book rented successfully'
+  end
+
   def list_all_people
     @people.each do |person|
-      puts "Name: #{person.name}, Age: #{person.age}"
+      puts "[#{person.class}] Name: #{person.name}, Age: #{person.age}"
     end
   end
 
@@ -91,7 +115,7 @@ class App
     when '4'
       create_book
     when '5'
-      puts 'Create a rental'
+      create_rental
     when '6'
       puts 'List all'
     when '7'
