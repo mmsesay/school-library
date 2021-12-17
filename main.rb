@@ -1,6 +1,9 @@
+require './student'
+require './teacher'
+
 class App
   def initialize
-    
+    @people = []
   end
 
   def menu
@@ -14,6 +17,45 @@ class App
     7 - Exit'
   end
 
+  def create_person
+    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+
+    user_selection = gets.chomp
+
+    print 'Enter Age: '
+    age = gets.chomp
+
+    print 'Enter Name: '
+    name = gets.chomp
+
+    print 'Has parent permission? [Y/N]: '
+    parent_permission_input = gets.chomp
+
+    has_parent_permission = nil
+    if parent_permission_input == 'Y' || parent_permission_input == 'y'
+      has_parent_permission = true
+    else
+      has_parent_permission = false
+    end
+
+    case user_selection
+    when '1'
+      print 'Enter classroom: '
+      classroom = gets.chomp
+
+      Student.new(age, name, classroom, has_parent_permission)
+      puts 'New student created successfully'
+    when '2'
+      print 'Enter specialization: '
+      specialization = gets.chomp
+
+      Teacher.new(age, name, specialization, has_parent_permission)
+      puts 'New Teacher created successfully'
+    else
+      puts 'Invalid selection'
+    end
+  end
+
   def handle_user_input
     user_input = gets.chomp
     case user_input
@@ -22,7 +64,7 @@ class App
     when '2'
       puts 'List People'
     when '3'
-      puts 'Create Person'
+      create_person
     when '4'
       puts 'Create a book'
     when '5'
