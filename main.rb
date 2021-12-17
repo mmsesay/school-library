@@ -24,15 +24,13 @@ class App
   def handle_person_creation(user_input, age, name, parent_permission)
     case user_input
     when '1'
-      person = Student.new(age, name, parent_permission)
-      @people << person
+      @people << Student.new(age, name, parent_permission)
       puts 'New student created successfully'
     when '2'
       print 'Enter specialization: '
       specialization = gets.chomp
 
-      person = Teacher.new(age, specialization, name, parent_permission)
-      @people << person
+      @people << Teacher.new(age, specialization, name, parent_permission)
       puts 'New Teacher created successfully'
     else
       puts 'Invalid selection'
@@ -75,11 +73,17 @@ class App
     end
   end
 
+  def list_all_books
+    @books.each do |book|
+      puts "Book Title: #{book.title}, Book Author: #{book.author}"
+    end
+  end
+
   def handle_menu_selection
     user_input = gets.chomp
     case user_input
     when '1'
-      puts 'List Books'
+      list_all_books
     when '2'
       list_all_people
     when '3'
