@@ -19,10 +19,28 @@ class App
     puts "\n"
   end
 
+  def handle_person_creation(user_input, age, name, parent_permission)
+    case user_input
+    when '1'
+      person = Student.new(age, name, parent_permission)
+      @people << person
+      puts 'New student created successfully'
+    when '2'
+      print 'Enter specialization: '
+      specialization = gets.chomp
+
+      person = Teacher.new(age, specialization, name, parent_permission)
+      @people << person
+      puts 'New Teacher created successfully'
+    else
+      puts 'Invalid selection'
+    end
+  end
+
   def create_person
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
 
-    user_selection = gets.chomp
+    user_input = gets.chomp
 
     print 'Enter Age: '
     age = gets.chomp
@@ -33,28 +51,9 @@ class App
     print 'Has parent permission? [Y/N]: '
     parent_permission_input = gets.chomp
 
-    has_parent_permission = nil
-    if parent_permission_input == 'Y' || parent_permission_input == 'y'
-      has_parent_permission = true
-    else
-      has_parent_permission = false
-    end
+    has_parent_permission = parent_permission_input.include? 'Yy'
 
-    case user_selection
-    when '1'
-      person = Student.new(age, name, has_parent_permission)
-      @people << person
-      puts 'New student created successfully'
-    when '2'
-      print 'Enter specialization: '
-      specialization = gets.chomp
-
-      person = Teacher.new(age, specialization, name, has_parent_permission)
-      @people << person
-      puts 'New Teacher created successfully'
-    else
-      puts 'Invalid selection'
-    end
+    handle_person_creation(user_input, age, name, has_parent_permission)
   end
 
   def list_all_people
@@ -63,7 +62,7 @@ class App
     end
   end
 
-  def handle_user_input
+  def handle_menu_selection
     user_input = gets.chomp
     case user_input
     when '1'
@@ -90,7 +89,7 @@ class App
 
     while user_input != '7'
       menu
-      handle_user_input
+      handle_menu_selection
     end
   end
 end
