@@ -50,10 +50,13 @@ class App
     print 'Enter Name: '
     name = gets.chomp
 
-    print 'Has parent permission? [Y/N]: ' if user_input == 1
-    parent_permission_input = gets.chomp
+    has_parent_permission = false
+    if user_input == '1'
+      print 'Has parent permission? [Y/N]: '
+      parent_permission_input = gets.chomp
 
-    has_parent_permission = parent_permission_input.include? 'Yy'
+      has_parent_permission = parent_permission_input.include? 'Yy'
+    end
 
     handle_person_creation(user_input, age, name, has_parent_permission)
   end
