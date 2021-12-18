@@ -2,10 +2,9 @@
 
 > School library is a tool to record what books are in the library and who borrows them. The app allow yours to add a new student or teacher. Add new books and save records.
 
-     Application Demo               |
------------------------------------:|
-![]('./demo/school-library.gif')    |
-
+Application Demo                |
+:-------------------------------|
+![](./demo/school-library.gif)  |
 
 ## Built With
 
