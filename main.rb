@@ -11,6 +11,7 @@ class App
   end
 
   def menu
+    puts "\n"
     puts 'Please choose an option by entering a number:
     1 - List all books
     2 - List all people
@@ -19,8 +20,6 @@ class App
     5 - Create a rental
     6 - List all rentals for a given person id
     7 - Exit'
-
-    puts "\n"
   end
 
   def handle_person_creation(user_input, age, name, parent_permission)
@@ -40,6 +39,7 @@ class App
   end
 
   def create_person
+    puts "\n"
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
 
     user_input = gets.chomp
@@ -50,7 +50,7 @@ class App
     print 'Enter Name: '
     name = gets.chomp
 
-    print 'Has parent permission? [Y/N]: '
+    print 'Has parent permission? [Y/N]: ' if user_input == 1
     parent_permission_input = gets.chomp
 
     has_parent_permission = parent_permission_input.include? 'Yy'
@@ -59,6 +59,7 @@ class App
   end
 
   def create_book
+    puts "\n"
     print 'Enter Book Title: '
     book_title = gets.chomp
 
@@ -70,14 +71,15 @@ class App
   end
 
   def create_rental
-    puts '\nSelect a book to rent from the numbers in the brackets'
+    puts "\n"
+    puts 'Select a book to rent from the numbers in the brackets'
     @books.each_with_index do |book, index|
       puts "(#{index}) - Book Title: #{book.title}, Author: #{book.author}"
     end
 
     selected_book = gets.chomp.to_i
 
-    puts '\nSelect a person who is renting the book from the numbers in the brackets'
+    puts 'Select a person who is renting the book from the numbers in the brackets'
     @people.each_with_index do |person, index|
       puts "(#{index}) - [#{person.class}] Name: #{person.name}, Age: #{person.age}"
     end
@@ -85,34 +87,47 @@ class App
     selected_person = gets.chomp.to_i
 
     print 'Enter rental date: '
-    rental_date = gets.chomp.to_s
+    rental_date = gets.chomp
 
     @rentals << Rental.new(rental_date, @books[selected_book], @people[selected_person])
     puts 'Book rented successfully'
   end
 
   def list_all_people
+    puts "\n"
+    puts 'Note: No people available.' if @people.empty?
+
     @people.each do |person|
       puts "[#{person.class}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
     end
   end
 
   def list_all_books
+    puts "\n"
+    puts 'Note: No books available.' if @books.empty?
+
     @books.each do |book|
       puts "Book Title: #{book.title}, Book Author: #{book.author}"
     end
   end
 
   def list_all_rentals
-    print 'Enter the ID of the person: '
-    input_id = gets.chomp.to_i
+    puts "\n"
 
-    puts 'All Rentals: '
-    @rentals.each do |rental|
-      if rental.person.id == input_id
-        puts "Book: #{rental.book.title} - Author: #{rental.book.author} rented on #{rental.date} by #{person.name}"
-      else
-        puts "User ID #{input_id} not found"
+    if @rentals.empty?
+      puts 'Note: No rentals available.'
+    else
+      print 'Enter the ID of the person: '
+      input_id = gets.chomp.to_i
+
+      puts 'All Rentals: '
+      @rentals.each do |rental|
+        if rental.person.id == input_id
+          puts "Book Title: #{rental.book.title}, Author: #{rental.book.author}"
+          puts "rented on #{rental.date} by #{rental.person.name}"
+        else
+          puts "User ID #{input_id} not found"
+        end
       end
     end
   end
@@ -133,6 +148,8 @@ class App
     when '6'
       list_all_rentals
     when '7'
+      puts 'Exiting the application...'
+      sleep 2
       exit
     end
   end
